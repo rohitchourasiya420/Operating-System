@@ -1,0 +1,61 @@
+// C Program to Implement the Scan Disk Scheduling Algorithm
+#include <stdio.h>
+int main() {
+   
+    int total_head_movement_l=0;
+     int total_head_movement_r=0;
+      int total_head_movement;
+    int n; ///To take total no. of cylinder
+    
+    printf("\nEnter the no. of cylinders to enter in Request Queue : ");
+    scanf("%d",&n);
+    
+    int request_queue[n];
+    printf("\n Enter the cylinders no. in Request queue :\n");
+    
+    for(int i=0;i<n;i++){
+        scanf("%d",&request_queue[i]);
+    }
+    
+   int temp;  
+   for(int i = 0; i < n; i++)    
+    {    
+      for(int j = i+1; j < n; j++)    
+        {  
+            if(request_queue[j] < request_queue[i])    
+            {    
+                temp = request_queue[i];    
+                request_queue[i] = request_queue[j];    
+                request_queue[j] = temp;     
+            }     
+        }     
+    }     
+    
+    for(int i=0 ; i<n ; i++){
+       printf("%d",request_queue[i]);
+    }
+   
+    int initial_pos;
+    printf("\nEnter the initial position of RW head: ");
+    scanf("%d",&initial_pos);
+    
+    int dir;
+    printf("Enter value of directon (0-left/1-right)")
+    scanf("%d",&dir);
+    
+    if(dir==0 || dir==1){
+        //for left Movements
+    for(int i=initial_pos;i>=0;i--){
+        total_head_movement_l += abs(initial_pos - request_queue[i]);
+        initial_pos = request_queue[i];
+    }
+      //for right Movements
+        for(int i=initial_pos;i<=n;i--){
+        total_head_movement_r += abs(initial_pos - request_queue[i]);
+        initial_pos = request_queue[i];
+    }
+    }
+    
+    printf("\nTotal No. of Head Movements = %d\n",total_head_movement_l + total_head_movement_r);
+    return 0;
+}
